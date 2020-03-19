@@ -14,33 +14,39 @@ class UserManager
  * Needs to be created via Google Apps Admin interface and be added to an admin role
  * that has permissions for Admin APIs for Users
  */
-    private $delegatedAdmin = config('customgoogleclientapi.delegatedAdmin');
+    private $delegatedAdmin;
 
     /*
  * Some name you want to use for your app to report to Google with calls, I assume
  * it is used in logging or something
  */
-    private $appName = config('customgoogleclientapi.appName');
+    private $appName;
 
     /*
  * Array of scopes you need for whatever actions you want to perform
  * See https://developers.google.com/admin-sdk/directory/v1/guides/authorizing
  */
-    private $scopes = config('customgoogleclientapi.scopes');
+    private $scopes;
 
     /* the hosted domain */
-    private $domain = config('customgoogleclientapi.domain');
+    private $domain;
 
     /*
  * Provide path to JSON credentials file that was downloaded from Google Developer Console
  * for Service Account
  */
-    private $authJson = config('customgoogleclientapi.authJson');
+    private $authJson;
 
     private $dir;
 
     public function __construct()
     {
+        $this->delegatedAdmin = config('customgoogleclientapi.delegatedAdmin');
+        $this->appName = config('customgoogleclientapi.appName');
+        $this->scopes = config('customgoogleclientapi.scopes');
+        $this->domain = config('customgoogleclientapi.domain');
+        $this->authJson = config('customgoogleclientapi.authJson');
+
         $client = new Google_Client();
         $client->setApplicationName($this->appName);
         $client->setAuthConfig($this->authJson);
