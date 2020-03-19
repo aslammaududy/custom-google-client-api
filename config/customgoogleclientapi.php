@@ -29,5 +29,5 @@ return [
  * Provide path to JSON credentials file that was downloaded from Google Developer Console
  * for Service Account
  */
-    "authJson" => __DIR__ . '/credentials.json',
+    "authJson" => base_path('credentials.json'),
 ];
