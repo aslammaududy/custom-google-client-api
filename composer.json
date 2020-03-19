@@ -1,0 +1,39 @@
+{
+    "name": "aslammaududy/customgoogleclientapi",
+    "description": "Custom Google Client API based on Informatics System of Politeknik Aceh",
+    "keywords": [
+        "aslammaududy",
+        "customgoogleclientapi"
+    ],
+    "homepage": "https://github.com/aslammaududy/customgoogleclientapi",
+    "license": "The Unlicense",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Aslam Maududy Atturraby",
+            "email": "aslam14397@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "google/apiclient": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Aslammaududy\\CustomGoogleClientApi\\": "src"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Aslammaududy\\CustomGoogleClientApi\\CustomGoogleClientApiServiceProvider"
+            ],
+            "aliases": {
+                "CustomGoogleClientApi": "Aslammaududy\\CustomGoogleClientApi\\CustomGoogleClientApiFacade"
+            }
+        }
+    }
+}
