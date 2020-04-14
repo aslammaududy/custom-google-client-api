@@ -4,6 +4,8 @@ namespace Aslammaududy\CustomGoogleClientApi;
 
 use Google_Client;
 use Google_Service_Directory;
+use Google_Service_Directory_User;
+use Google_Service_Directory_UserName;
 use User;
 
 class UserManager
@@ -41,6 +43,7 @@ class UserManager
 
     public function __construct()
     {
+
         $this->delegatedAdmin = config('customgoogleclientapi.delegatedAdmin');
         $this->appName = config('customgoogleclientapi.appName');
         $this->scopes = config('customgoogleclientapi.scopes');
@@ -48,8 +51,8 @@ class UserManager
         $this->authJson = config('customgoogleclientapi.authJson');
 
         $client = new Google_Client();
-        $client->setApplicationName($this->appName);
         $client->setAuthConfig($this->authJson);
+        $client->setApplicationName($this->appName);
         $client->setSubject($this->delegatedAdmin);
         $client->setScopes($this->scopes);
         $client->setAccessType('offline');
@@ -59,16 +62,24 @@ class UserManager
 
     public function showUsers()
     {
-        $users = $this->dir->users->listUsers(["domain" => $this->domain]);
+        $users = $this->dir->users->listUsers(["domain" => $this->domain])->getUsers();
+
         return $users;
     }
 
-    public function addUser()
+    public function addUser(array $userData)
     {
-        $user = new User();
-        $user->setPrimaryEmail("cobauser@$this->domain");
-        $user->name("Coba", "User");
+        $user = new Google_Service_Directory_User();
+        $name = new Google_Service_Directory_UserName();
+
+        $name->setGivenName($userData["namaDepan"]);
+        $name->setFamilyName($userData["namaBelakang"]);
+
+        $user->setPrimaryEmail("{$userData["email"]}@politeknikaceh.ac.id");
+        $user->setName($name);
+        $user->setPassword($userData["password"]);
         $user->setOrganizations("politeknikaceh.ac.id");
+
         $this->dir->users->insert($user);
     }
 }
